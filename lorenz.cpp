@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+#include "randNormal.h"
 
 using namespace std;
 
@@ -10,7 +11,7 @@ int main()
   double sigma = 10.0;
   double rho = 28.0;
   double beta = 8./3.;
-  double eps = 0.01; //Amplitude of the noise 
+  double eps = 0.001; //Amplitude of the noise 
   /*Simulation parameters*/
   int numberOfIterations = 100000;
   double timeStep = 0.001;
@@ -35,9 +36,9 @@ int main()
 	  k++; cout << k << "%\r"; fflush(stdout);
 	}
       /*Compute lorenz model*/
-      x = x + timeStep*sigma*(y-x) + eps*sdt*randN();
-      y = y + timeStep*(x*(rho-z) - y) + eps*sdt*randN();
-      z = z + timeStep*(x*y - beta*z) + eps*sdt*randN();
+      x = x + timeStep*sigma*(y-x) + eps*sdt*randNormal();
+      y = y + timeStep*(x*(rho-z) - y) + eps*sdt*randNormal();
+      z = z + timeStep*(x*y - beta*z) + eps*sdt*randNormal();
 
       /*Write resutl on disk*/
       traj /*<< t*timeStep << " "*/ << x << " " << y << " " << z << endl;

@@ -8,7 +8,7 @@ int main()
 {
   double a;
   fstream temp("temp.datout", ios::out);
-  for(int i=0;i<10000;i++)
+  for(int i=0;i<1000000;i++)
     {
       a = randNormal();
       temp << a << endl;
