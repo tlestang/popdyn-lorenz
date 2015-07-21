@@ -10,6 +10,7 @@ int main()
   double sigma = 10.0;
   double rho = 28.0;
   double beta = 8./3.;
+  double eps = 0.01; //Amplitude of the noise 
   /*Simulation parameters*/
   int numberOfIterations = 100000;
   double timeStep = 0.001;
@@ -23,7 +24,7 @@ int main()
 
   /*Misc*/
   int k=0; // Count for percentage
-  
+  int sdt = sqrt(timeStep);
   /* START MAIN LOOP OVER TIMESTEPS */
 
   for(int t=0;t<numberOfIterations;t++)
@@ -34,9 +35,9 @@ int main()
 	  k++; cout << k << "%\r"; fflush(stdout);
 	}
       /*Compute lorenz model*/
-      x = x + timeStep*sigma*(y-x);
-      y = y + timeStep*(x*(rho-z) - y);
-      z = z + timeStep*(x*y - beta*z);
+      x = x + timeStep*sigma*(y-x) + eps*sdt*randN();
+      y = y + timeStep*(x*(rho-z) - y) + eps*sdt*randN();
+      z = z + timeStep*(x*y - beta*z) + eps*sdt*randN();
 
       /*Write resutl on disk*/
       traj /*<< t*timeStep << " "*/ << x << " " << y << " " << z << endl;
