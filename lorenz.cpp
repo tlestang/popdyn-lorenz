@@ -2,6 +2,8 @@
 #include <cmath>
 #include <fstream>
 
+using namespace std;
+
 int main()
 {
   /*Lorenz model parameters*/
@@ -9,8 +11,8 @@ int main()
   double rho = 28.0;
   double beta = 8./3.;
   /*Simulation parameters*/
-  double numberOfIterations;
-  double timeStep;
+  int numberOfIterations = 1000;
+  double timeStep = 0.01;
   /*Dynamical qties*/
   double x, y, z;
 
@@ -18,6 +20,9 @@ int main()
   ofstream traj("trajectory_no_noise.datout");
   /*Initialize dynamical qties*/
   x = y = z = 0;
+
+  /*Misc*/
+  int k; // Count for percentage
   
   /* START MAIN LOOP OVER TIMESTEPS */
 
