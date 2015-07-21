@@ -11,18 +11,18 @@ int main()
   double rho = 28.0;
   double beta = 8./3.;
   /*Simulation parameters*/
-  int numberOfIterations = 1000;
-  double timeStep = 0.01;
+  int numberOfIterations = 100000;
+  double timeStep = 0.001;
   /*Dynamical qties*/
   double x, y, z;
 
   /* Open output file*/
   ofstream traj("trajectory_no_noise.datout");
   /*Initialize dynamical qties*/
-  x = y = z = 0;
+  x = y = z = 1;
 
   /*Misc*/
-  int k; // Count for percentage
+  int k=0; // Count for percentage
   
   /* START MAIN LOOP OVER TIMESTEPS */
 
@@ -39,7 +39,7 @@ int main()
       z = z + timeStep*(x*y - beta*z);
 
       /*Write resutl on disk*/
-      traj << t*timeStep << " " << x << " " << y << " " << z << endl;
+      traj /*<< t*timeStep << " "*/ << x << " " << y << " " << z << endl;
     }
 
   traj.close();
