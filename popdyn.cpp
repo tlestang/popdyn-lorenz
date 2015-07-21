@@ -63,10 +63,10 @@ int main()
 	  lorenz_transient(x0[j], 5.0); //Transient regime
 	}
 
-  for(int t=0;t<nbrTimeSteps;t++)
+    for(int t=0;t<nbrTimeSteps;t++)
     {
       
-      //if(t%(nbrTimeSteps/100)==0){l++; cout << l << "%\r"; fflush(stdout);}
+      if(t%(nbrTimeSteps/100)==0){l++; cout << l << "%\r"; fflush(stdout);}
       R = 0.0; // Mean weight initilization
       for(int j=0;j<Nc;j++) // Loop on clones
 	{
@@ -75,6 +75,8 @@ int main()
                                          //   the corresponding absolute weight
 	R += s[j];
 	} // END OF LOOP ON CLONES
+
+      
       R /= Nc;
       NcPrime = 0.0;
       for(int j=0;j<Nc;j++)
