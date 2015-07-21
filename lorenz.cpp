@@ -7,7 +7,7 @@ using namespace std;
 
 double lorenz(double *x0, double *m_x, double alpha, double totalTime)
 {
-  /*Lorenz model parameters*/
+    /*Lorenz model parameters*/
   double sigma = 10.0;
   double rho = 28.0;
   double beta = 8./3.;
@@ -21,6 +21,8 @@ double lorenz(double *x0, double *m_x, double alpha, double totalTime)
   /*Misc*/
   int k=0; // Count for percentage
   int sdt = sqrt(timeStep);
+  double s=0.0;
+  
   /* First itearation from initial conditions */
       x = x0[0] + timeStep*sigma*(x0[1]-x0[0]) + eps*sdt*randNormal();
       y = x0[1] + timeStep*(x0[0]*(rho-x0[2]) - x0[1]) + eps*sdt*randNormal();
@@ -43,9 +45,9 @@ double lorenz(double *x0, double *m_x, double alpha, double totalTime)
       s += x;
     }
     /*Update values of coordinates*/
-    x[0] = x;
-    x[1] = y;
-    x[3] = z;
+    m_x[0] = x;
+    m_x[1] = y;
+    m_x[3] = z;
     /*Compute weight and return it*/
     s *= timeStep;
     return exp(alpha*s);
