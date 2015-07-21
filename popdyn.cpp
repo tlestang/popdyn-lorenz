@@ -5,28 +5,16 @@
 #include<cmath>
 #include<iomanip>
 #include<ctime>
-
+#incldue "lorenz.h"
 using namespace std;
 
-
-  int Nc = 200; // Number of clones
+int main()
+{  int Nc = 200; // Number of clones
   double T = 100; // Total simulation time
-  double dt = 0.002; // Model timestep
 //double dT = 0.1; // Cloning timestep
   int K = 100;
 
   double alpha = -5.0;
-
-  //parameters for the OU model
-  double eps = sqrt(2); // amplitude of the noise (See notes by francesco)
-  double tau = 1.0; // Relaxation time
-
-double OU(double, double*, double, double);
-  double randNormal(const double, const double);
-  void OU_transient(double*, double);
-
-int main()
-{
   double dT;
   int nbrTimeSteps;
   double **x0; // State of the clones after cloning (initial conditions for next block)
@@ -203,62 +191,3 @@ int main()
 
 
 
-double OU(double x0, double *m_x, double alpha, double dT)
-{
-  /* Simulates the OU process during dT for 1 clone and compute the corresponding weight s defined as
-     exp(\aplha * \int_{t}^{t+dT} x^{2}*dt) */
-  double x,s;  
-  double sdt = sqrt(dt);
-  int nbrTimeStepsEvol = dT/dt;
-
-  x = x0 -(x0/tau)*dt + eps*sdt*randNormal(0.0,1.0);
-  s = x*x;
-  for(double t=1;t<nbrTimeStepsEvol;t++)
-    {
-
-      x = x -(x/tau)*dt + eps*sdt*randNormal(0.0, 1.0);
-      s += x*x;
-    }
-  *m_x = x; 
-  s *= dt;
-
-  return exp(alpha*s);
-
-}
-
-void OU_transient(double *m_x0, double T_transient)
-{
-
-  /* Simulates the OU process during T_transient but does not compute any weight. It initializes the initial conditions array x0[] */
-  double x;
-  double sdt = sqrt(dt);
-  int nbrTimeStepsEvol = T_transient/dt;
-
-  x = *m_x0 -(*m_x0/tau)*dt + eps*sdt*randNormal(0.0,1.0);
-
-  for(double t=1;t<nbrTimeStepsEvol;t++)
-    {
-      x = x -(x/tau)*dt + eps*sdt*randNormal(0.0, 1.0);
-    }
-  *m_x0 = x; 
-}
-
-double randNormal(const double mean_, const double sigma_)
-{
-  /* Return a random number sampled in N(mean_, sigma_).
-     Box-Muller method.
-  */
-
-  double x1, x2, w;
-  do {
-    x1 = 2.0 * (rand () / double (RAND_MAX)) - 1.0;
-    x2 = 2.0 * (rand () / double (RAND_MAX)) - 1.0;
-    w = x1 * x1 + x2 * x2;
-  } while (w >= 1.0);
-
-  w = sqrt (-2.0 * log (w)/w);
-  const double y1 = x1 * w;
-  const double y2 = x2 * w;
-
-  return mean_ + y1 * sigma_;
-}
