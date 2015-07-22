@@ -36,9 +36,9 @@ int main()
 	  k++; cout << k << "%\r"; fflush(stdout);
 	}
       /*Compute lorenz model*/
-      x = x + timeStep*sigma*(y-x) + eps*sdt*randNormal();
-      y = y + timeStep*(x*(rho-z) - y) + eps*sdt*randNormal();
-      z = z + timeStep*(x*y - beta*z) + eps*sdt*randNormal();
+      x = x + timeStep*sigma*(y-x) + x*eps*randNormal();
+      y = y + timeStep*(x*(rho-z) - y) + y*eps*randNormal();
+      z = z + timeStep*(x*y - beta*z) + z*eps*randNormal();
 
       /*Write resutl on disk*/
       traj /*<< t*timeStep << " "*/ << x << " " << y << " " << z << endl;
